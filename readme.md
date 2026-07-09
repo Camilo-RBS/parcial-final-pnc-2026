@@ -163,6 +163,6 @@ Book book = bookRepository.findByIsbn(dto.getIsbn())
 ```
 ```
 No existía ninguna verificación de que el lector tuviera un prestamo (`BORROWING`) activo y sin devolver para ese libro. `MovementRepository` tampoco tenía ningun metodo para consultar el historial de movimientos de un lector/libro (`extends JpaRepository<Movement, UUID> {}` vacio).
----
+Tambien agregu un mteodo en `MovementRepository` para obtener el último movimiento entre un lector y un libro (`findTopByLectorAndBookOrderByTimestampDesc`). Antes de aceptar una devolución, se valida que ese último movimiento exista y sea de tipo `BORROWING`; si no, se lanza un error y no se permite la devolución.
 
 
